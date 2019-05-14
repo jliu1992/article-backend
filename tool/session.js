@@ -18,6 +18,16 @@ function addSessionId(id) {
   }, 30 * 60 * 1000);
 }
 
+function deleteSessionId(id) {
+  if (clearTimeoutList[id]) {
+    clearInterval(clearTimeoutList[id]);
+    const index = sessionIds.indexOf(id);
+    if (index >= 0) {
+      sessionIds.splice(index, 1);
+    }
+  }
+}
+
 function flushSessionId(id) {
   if (clearTimeoutList[id]) {
     clearInterval(clearTimeoutList[id]);
@@ -39,6 +49,7 @@ function validateSessionId(id) {
 module.exports = {
   generateId,
   addSessionId,
+  deleteSessionId,
   flushSessionId,
   validateSessionId
 }

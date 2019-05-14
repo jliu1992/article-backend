@@ -22,9 +22,14 @@ router.post('/login', function (req, res, next) {
     });
 });
 
+router.post('/logout', function (req, res, next) {
+  const { sessionid } = req.cookies;
+  session.deleteSessionId(sessionid);
+  res.json({ msg: '登出成功' });
+});
+
 router.post('/signup', function (req, res, next) {
-  const { id, name, pass } = req.body;
-  User.create({ id, name, pass }, (err, user) => {
+  User.create({ ...req.body }, (err, user) => {
     if (err) {
       switch (err.code) {
         case 11000: {
